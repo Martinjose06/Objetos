@@ -9,13 +9,19 @@ package interfaz;
  *
  * @author mzuleta4
  */
-import clases.Persona;
+import clases.*;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 public class Principal extends javax.swing.JFrame {
 
     /**
      * Creates new form Principal
      */
-    Persona v[] = new Persona[5];
+    ArrayList<Persona> v = new ArrayList();
+   
+    
+
     public Principal() {
         initComponents();
     }
@@ -55,7 +61,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel1.setText("AGREGAR PERSONAS");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, -1, -1));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos De Las Personas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos De Las Personas", 0, 0, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setText("Identificacion");
@@ -66,13 +72,31 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel4.setText("Primer Apellido");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+
+        txtIdentificacion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIdentificacionKeyTyped(evt);
+            }
+        });
         jPanel2.add(txtIdentificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 70, -1));
+
+        txtPrimerNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrimerNombreKeyTyped(evt);
+            }
+        });
         jPanel2.add(txtPrimerNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 70, -1));
+
+        txtPrimerApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrimerApellidoKeyTyped(evt);
+            }
+        });
         jPanel2.add(txtPrimerApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 70, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 210, 200));
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Opciones", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Opciones", 0, 0, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cmdGuardar.setText("Guardar");
@@ -84,16 +108,27 @@ public class Principal extends javax.swing.JFrame {
         jPanel3.add(cmdGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 80, -1));
 
         cmdMostrar.setText("Mostrar");
+        cmdMostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdMostrarActionPerformed(evt);
+            }
+        });
         jPanel3.add(cmdMostrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 80, -1));
 
         cmdLimpiar.setText("Limpiar");
+        cmdLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdLimpiarActionPerformed(evt);
+            }
+        });
         jPanel3.add(cmdLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 80, -1));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 80, 140, 200));
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Personas Ingresadas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Personas Ingresadas", 0, 0, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        txtPersonasIngresadas.setEditable(false);
         txtPersonasIngresadas.setColumns(20);
         txtPersonasIngresadas.setRows(5);
         jScrollPane1.setViewportView(txtPersonasIngresadas);
@@ -102,9 +137,9 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, 510, 140));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 480));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 520));
 
-        setSize(new java.awt.Dimension(476, 411));
+        setSize(new java.awt.Dimension(705, 593));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -113,13 +148,93 @@ public class Principal extends javax.swing.JFrame {
         Persona p;
         long identificacion;
         String primer_nombre, primer_apellido;
-        
+
         identificacion = Long.parseLong(txtIdentificacion.getText());
         primer_nombre = txtPrimerNombre.getText();
         primer_apellido = txtPrimerApellido.getText();
+
+        p = new Persona(identificacion, primer_nombre, primer_apellido);
+        v.add(p);
+       
+       Helper.mensaje(this, "Persona Agregada Exitosamente", "Informacion",1);
+        //JOptionPane.showMessageDialog(this, "Persona Agregada Exitosamente");
+
+        txtIdentificacion.setText("");
+        txtPrimerApellido.setText("");
+        txtPrimerNombre.setText("");
+
+        txtIdentificacion.requestFocusInWindow();
         
-        p = new Persona (identificacion, primer_nombre, primer_apellido);
     }//GEN-LAST:event_cmdGuardarActionPerformed
+
+    private void txtIdentificacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdentificacionKeyTyped
+
+        char c = evt.getKeyChar();
+
+        if (!Character.isDigit(c)) {
+            getToolkit().beep();
+
+            evt.consume();
+
+        }
+    }//GEN-LAST:event_txtIdentificacionKeyTyped
+
+    private void txtPrimerNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrimerNombreKeyTyped
+        char c = evt.getKeyChar();
+
+        if (!Character.isAlphabetic(c)) {
+            getToolkit().beep();
+
+            evt.consume();
+
+        }
+    }//GEN-LAST:event_txtPrimerNombreKeyTyped
+
+    private void txtPrimerApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrimerApellidoKeyTyped
+
+        char c = evt.getKeyChar();
+
+        if (!Character.isAlphabetic(c)) {
+            getToolkit().beep();
+
+            evt.consume();
+
+        }
+    }//GEN-LAST:event_txtPrimerApellidoKeyTyped
+
+    private void cmdMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdMostrarActionPerformed
+
+        String aux;
+        if (v.isEmpty()) {
+            txtPersonasIngresadas.setText("No Hay Personas Que Mostrar");
+            txtIdentificacion.requestFocusInWindow();
+        }
+        for (int i = 0; i < v.size(); i++) {
+            aux = "Persona No. " + (i + 1) + "\n"
+                    + "Identificacion: "+v.get(i).getIdentificacion()+"\n"
+                    + "Primer Nombre: "+v.get(i).getPrimer_nombre()+"\n"
+                    + "Primer Apellido: "+v.get(i).getPrimer_apellido()+"\n\n";
+            txtPersonasIngresadas.append(aux);
+            
+        }
+    }//GEN-LAST:event_cmdMostrarActionPerformed
+
+    private void cmdLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLimpiarActionPerformed
+
+        int op;
+        //op = JOptionPane.showConfirmDialog(this, "¿Seguro Que Desea Borrar Todos Los Objetos?","Pregunta",JOptionPane.YES_NO_OPTION);
+        op = Helper.mensaje(this, "¿Seguro Que Desea Borrar Todos Los Objetos?","Pregunta",3 );
+        if (op == JOptionPane.YES_OPTION) {
+            v.clear();
+            txtIdentificacion.setText("");
+            txtPrimerNombre.setText("");
+            txtPrimerApellido.setText("");
+            txtPersonasIngresadas.setText("");
+        
+        }
+        
+        
+    }//GEN-LAST:event_cmdLimpiarActionPerformed
 
     /**
      * @param args the command line arguments
